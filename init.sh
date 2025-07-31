@@ -1,9 +1,17 @@
 #!/usr/bin/env bash
 
-function init_vars() {
-    disk=nvme0n1
-    disk_pass=
+function prompt_vars() {
+    read -p "Disk: " disk
+    read -s -p "Disk pass: " disk_pass
 
+    read -p "User: " user
+    read -s -p "User $user password: " user_pass
+
+    read -s -p "Root password: " root_pass
+}
+
+function init_vars() {
+    prompt_vars
     if [ -d "/sys/firmware/efi" ]; then
         disk_label="gpt"
     else
@@ -25,11 +33,6 @@ function init_vars() {
             root_part=$disk'1'
         fi
     fi
-
-    user=a
-    user_pass=
-
-    root_pass=
 
     timezone=$(curl -s https://ipinfo.io/timezone)
     if [ ! -f "/usr/share/zoneinfo/$timezone" ]; then
