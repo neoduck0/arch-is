@@ -6,7 +6,6 @@ cd $(dirname $0)
 source functions.sh
 prompt_vars
 get_vars
-check_vars
 
 if [ $disk_label = gpt ]; then
     sgdisk --zap-all /dev/$disk

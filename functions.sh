@@ -38,12 +38,3 @@ function get_vars() {
         timezone="UTC"
     fi
 }
-
-function check_vars() {
-    for var in user user_pass root_pass disk disk_pass; do
-        if [[ -z "${!var}" ]]; then
-            echo "Variable $var is unset or set uncorrectly"
-            exit 1
-        fi
-    done
-}
