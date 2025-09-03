@@ -20,18 +20,14 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 systemd_services
 
-if [ $omz = true ]; then
-    su --session-command='sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"' $user
-fi
+su --session-command='sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"' $user
 
-if [ $yay = true ]; then
-    git clone https://aur.archlinux.org/yay.git /home/$user/yay
-    chown -R $user:$user /home/$user/yay
-    cd /home/$user/yay
-    su --session-command="makepkg -si" $user
-    cd
-    rm -rf /home/$user/yay
-fi
+git clone https://aur.archlinux.org/yay.git /home/$user/yay
+chown -R $user:$user /home/$user/yay
+cd /home/$user/yay
+su --session-command="makepkg -si" $user
+cd
+rm -rf /home/$user/yay
 
 cd
 rm -rf /root/install-scripts

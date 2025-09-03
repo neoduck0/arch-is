@@ -37,9 +37,6 @@ function get_vars() {
     if [ ! -f "/usr/share/zoneinfo/$timezone" ]; then
         timezone="UTC"
     fi
-
-    omz=true
-    yay=true
 }
 
 function check_vars() {
