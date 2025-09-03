@@ -47,32 +47,3 @@ function check_vars() {
         fi
     done
 }
-
-function systemd_services() {
-    if pacman -Q bluez &> /dev/null; then
-        systemctl enable bluetooth
-    fi
-    if pacman -Q libvirt &> /dev/null; then
-        systemctl enable libvirtd.socket
-    fi
-    if pacman -Q keyd &> /dev/null; then
-        cp ./resources/keyd.conf /etc/keyd/default.conf
-        systemctl enable keyd
-        keyd reload
-    fi
-    if pacman -Q firewalld &> /dev/null; then
-        systemctl enable firewalld
-    fi
-    if pacman -Q ufw &> /dev/null; then
-        systemctl enable ufw
-        ufw limit 22/tcp
-        ufw allow 80/tcp
-        ufw allow 443/tcp
-        ufw default deny incoming
-        ufw default allow outgoing
-        ufw enable
-    fi
-    if pacman -Q networkmanager &> /dev/null; then
-        systemctl enable NetworkManager
-    fi
-}
