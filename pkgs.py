@@ -1,8 +1,44 @@
 #!/usr/bin/env python
 
-import os
+import os, sys
 
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
+def main():
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    try:
+        if len(sys.argv[1:]) > 1:
+            raise Exception
+        arg = sys.argv[1]
+    except:
+        print("Provide one argument")
+        sys.exit(1)
+
+    if arg == "diff":
+        diff()
+    else:
+        print("Provide a valid argument")
+        sys.exit(1)
+
+def diff(excluded_opts=[]):
+    selected = PROFILES["hyprland"]
+
+    os.system("""
+              pacman -Qeq > 1
+              """)
+
+    for OPT in OPTS:
+        if OPT not in excluded_opts:
+            selected += OPTS[OPT]
+
+    selected.sort()
+
+    with open("2", "w") as f:
+        for pkg in selected:
+            f.write(f"{pkg}\n")
+
+    os.system("""
+              diff 2 1
+              rm 1 2
+              """)
 
 BASIC = [
         "base",
@@ -158,26 +194,5 @@ OPTS = {
             ]
         }
 
-def diff(excluded_opts=[]):
-    selected = PROFILES["hyprland"]
-
-    os.system("""
-              pacman -Qeq > 1
-              """)
-
-    for OPT in OPTS:
-        if OPT not in excluded_opts:
-            selected += OPTS[OPT]
-
-    selected.sort()
-
-    with open("2", "w") as f:
-        for pkg in selected:
-            f.write(f"{pkg}\n")
-
-    os.system("""
-              diff 2 1
-              rm 1 2
-              """)
-
-diff()
+if __name__ == "__main__":
+    main()
