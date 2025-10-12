@@ -7,6 +7,10 @@ source functions.sh
 get_vars
 
 # locales
+timezone=$(curl -s https://ipinfo.io/timezone)
+if [ ! -f "/usr/share/zoneinfo/$timezone" ]; then
+    timezone="UTC"
+fi
 ln -sf /usr/share/zoneinfo/$timezone /etc/localtime
 hwclock --systohc
 locale-gen

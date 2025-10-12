@@ -32,9 +32,4 @@ function get_vars() {
             root_part=$disk'1'
         fi
     fi
-
-    timezone=$(curl -s https://ipinfo.io/timezone)
-    if [ ! -f "/usr/share/zoneinfo/$timezone" ]; then
-        timezone="UTC"
-    fi
 }

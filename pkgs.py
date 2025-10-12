@@ -4,19 +4,15 @@ import os, sys
 
 def main():
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
-    try:
-        if len(sys.argv[1:]) > 1:
-            raise Exception
-        arg = sys.argv[1]
-    except:
-        print("Provide one argument")
+
+    if len(sys.argv) == 1:
+        print("error: provide arguments.")
         sys.exit(1)
 
-    if arg == "diff":
+    if sys.argv[1] == "diff":
         diff()
     else:
-        print("Provide a valid argument")
-        sys.exit(1)
+        gen_file()
 
 def diff(excluded_opts=[]):
     selected = PROFILES["hyprland"]
@@ -39,6 +35,19 @@ def diff(excluded_opts=[]):
               diff 2 1
               rm 1 2
               """)
+
+def gen_file():
+    profile = sys.argv[1]
+    opts = sys.argv[2:]
+
+    pkgs = list(PROFILES[profile])
+    for opt in opts:
+        pkgs += OPTS[opt]
+    pkgs.sort()
+
+    with open("pkgs", "w") as f:
+        for pkg in pkgs:
+            f.write(pkg + "\n")
 
 BASIC = [
         "base",
