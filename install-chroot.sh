@@ -46,6 +46,7 @@ if pacman -Q ufw &> /dev/null; then
     ufw default deny incoming
     ufw default allow outgoing
     ufw enable
+    echo 'firewall_backend = "iptables"' > /etc/libvirt/network.conf
 fi
 if pacman -Q networkmanager &> /dev/null; then
     systemctl enable NetworkManager
