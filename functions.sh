@@ -2,12 +2,12 @@
 
 function prompt_vars() {
     read -p "Disk: " disk
-    read -s -p "Disk pass: " disk_pass
+    read -p "Disk pass: " disk_pass
 
     read -p "User: " user
-    read -s -p "User $user password: " user_pass
+    read -p "User $user password: " user_pass
 
-    read -s -p "Root password: " root_pass
+    read -p "Root password: " root_pass
 }
 
 function get_vars() {
