@@ -2,8 +2,10 @@
 
 import os, sys
 
+WD = os.path.dirname(os.path.abspath(__file__))
+
 def main():
-    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    os.chdir(WD)
 
     if len(sys.argv) == 1:
         print("error: provide arguments.")
@@ -14,16 +16,12 @@ def main():
     else:
         gen_file()
 
-def diff(excluded_opts=[]):
+def diff():
     selected = PROFILES["hyprland"]
 
     os.system("""
               pacman -Qeq > 1
               """)
-
-    for OPT in OPTS:
-        if OPT not in excluded_opts:
-            selected += OPTS[OPT]
 
     selected.sort()
 
@@ -38,11 +36,8 @@ def diff(excluded_opts=[]):
 
 def gen_file():
     profile = sys.argv[1]
-    opts = sys.argv[2:]
 
     pkgs = list(PROFILES[profile])
-    for opt in opts:
-        pkgs += OPTS[opt]
     pkgs.sort()
 
     with open("pkgs", "w") as f:
@@ -92,10 +87,14 @@ BASIC = [
         "ripgrep",
         "rust",
         "sudo",
+        "typescript",
+        "typescript-language-server",
         "udisks2",
         "ufw",
         "unzip",
         "usbutils",
+        "vscode-css-languageserver",
+        "vscode-html-languageserver",
         "wget",
         "zip",
         "zsh",
@@ -113,13 +112,13 @@ DESKTOP = [
         "bluez",
         "bluez-utils",
         "calf",
-        "chromium",
-        "code",
         "deluge-gtk",
+        "dmidecode",
+        "dnsmasq",
         "eartag",
         "easyeffects",
         "ffmpeg",
-        "flatpak",
+        "firefox",
         "gnome-calculator",
         "gnome-clocks",
         "gnome-disk-utility",
@@ -129,8 +128,11 @@ DESKTOP = [
         "gvfs-mtp",
         "imagemagick",
         "kitty",
+        "libguestfs",
+        "libreoffice-fresh",
         "loupe",
         "morphosis",
+        "mpv",
         "nautilus",
         "noto-fonts",
         "noto-fonts-cjk",
@@ -144,18 +146,24 @@ DESKTOP = [
         "pipewire-jack",
         "pipewire-pulse",
         "polkit-gnome",
+        "proton-vpn-gtk-app",
+        "qemu-full",
         "scrcpy",
         "shotcut",
         "snapshot",
         "sof-firmware",
         "solanum",
+        "spice-vdagent",
+        "swtpm",
         "ttf-jetbrains-mono-nerd",
+        "virt-manager",
         "vlc",
         "vlc-plugins-all",
         "vulkan-icd-loader",
         "vulkan-intel",
         "wireplumber",
         "yt-dlp",
+        "zed"
         ]
 
 PROFILES = {
@@ -188,23 +196,6 @@ PROFILES = {
             ]
         + BASIC
         + DESKTOP
-        }
-
-OPTS = {
-        "virtualization": [
-            "dmidecode",
-            "dnsmasq",
-            "qemu-full",
-            "spice-vdagent",
-            "swtpm",
-            "virt-manager"
-            ],
-        "office": [
-            "libreoffice-fresh"
-            ],
-        "vpn": [
-            "proton-vpn-gtk-app"
-            ]
         }
 
 if __name__ == "__main__":
