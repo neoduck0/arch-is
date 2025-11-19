@@ -54,6 +54,9 @@ fi
 if pacman -Q networkmanager &> /dev/null; then
     systemctl enable NetworkManager
 fi
+if pacman -Q jellyfin-server &> /dev/null; then
+    ufw allow 8096/tcp
+fi
 
 # omz
 su --session-command='sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"' $user
