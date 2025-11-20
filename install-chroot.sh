@@ -32,11 +32,13 @@ if pacman -Q bluez &> /dev/null; then
 fi
 if pacman -Q libvirt &> /dev/null; then
     systemctl enable libvirtd.socket
+    usermod -aG libvirt $user
 fi
 if pacman -Q keyd &> /dev/null; then
     cp ./resources/keyd.conf /etc/keyd/default.conf
     systemctl enable keyd
     keyd reload
+    usermod -aG keyd $user
 fi
 if pacman -Q firewalld &> /dev/null; then
     systemctl enable firewalld
@@ -56,6 +58,9 @@ if pacman -Q networkmanager &> /dev/null; then
 fi
 if pacman -Q jellyfin-server &> /dev/null; then
     ufw allow 8096/tcp
+fi
+if pacman -Q waybar &> /dev/null; then
+    usermod -aG input $user
 fi
 
 # omz

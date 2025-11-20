@@ -49,5 +49,5 @@ sed -i 's|# %wheel ALL=(ALL:ALL) ALL|%wheel ALL=(ALL:ALL) ALL|' /mnt/etc/sudoers
 sed -i 's|# deny = 3|deny = 5|' /mnt/etc/security/faillock.conf
 
 cp -r ../install-scripts /mnt/root/install-scripts
-arch-chroot /mnt "disk=$disk /root/install-scripts/install-chroot.sh"
+arch-chroot /mnt "user=$user disk=$disk /root/install-scripts/install-chroot.sh"
 exit 0
