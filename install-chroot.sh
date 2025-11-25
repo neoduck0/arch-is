@@ -62,6 +62,12 @@ fi
 if pacman -Q waybar &> /dev/null; then
     usermod -aG input $user
 fi
+if pacman -Q waydroid &> /dev/null; then
+    systemctl enable waydroid-container
+    ufw allow 67
+    ufw allow 53
+    ufw default allow FORWARD
+fi
 
 # omz
 su --session-command='sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"' $user
