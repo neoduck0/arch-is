@@ -33,3 +33,25 @@ function get_vars() {
         fi
     fi
 }
+
+function create_dirs() {
+    local dirs=("Cloud" "Projects" "VMs" "ISOs")
+    for dir in "${dirs[@]}"; do
+        mkdir "/home/$user/$dir"
+    done
+}
+
+function install_dotfiles() {
+    local username="$1"
+    local repo_url="https://github.com/$username/dotfiles"
+    local repo_dir="/home/$user/Projects/dotfiles"
+
+    mkdir -p "/home/$user/Projects"
+
+    git clone "$repo_url" "$repo_dir"
+    cd "$repo_dir"
+    chmod +x install.sh
+    ./install.sh
+
+    cd -
+}
