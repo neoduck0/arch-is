@@ -34,7 +34,7 @@ function get_vars() {
     fi
 }
 
-function create_dirs() {
+function create_home_dirs() {
     local dirs=("Cloud" "Projects" "VMs" "ISOs")
     for dir in "${dirs[@]}"; do
         mkdir "/home/$user/$dir"
@@ -52,6 +52,8 @@ function install_dotfiles() {
     cd "$repo_dir"
     chmod +x install.sh
     ./install.sh
+
+    chown -R $user:$user $repo_dir
 
     cd -
 }

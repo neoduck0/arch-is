@@ -80,6 +80,9 @@ su --session-command="makepkg -si" $user
 cd
 rm -rf /home/$user/yay
 
+# dotfiles
+install_dotfiles neoduck0
+
 rm -rf /root/install-scripts
 
 echo
