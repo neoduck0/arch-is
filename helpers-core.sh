@@ -111,8 +111,8 @@ function fnc_disk() {
 function fnc_install_linux() {
     set +e
     local exit_code
+    pacman -Syy
     for i in {1..3}; do
-        pacman -Syy
         pacstrap -K /mnt $(tr '\n' ' ' < ./pkgs)
 
         exit_code=$?
