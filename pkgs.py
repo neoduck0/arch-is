@@ -159,8 +159,6 @@ DESKTOP = [
         "syncplay",
         "ttf-jetbrains-mono-nerd",
         "virt-manager",
-        "vlc",
-        "vlc-plugins-all",
         "vulkan-icd-loader",
         "vulkan-intel",
         "waydroid",
