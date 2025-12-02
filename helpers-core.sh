@@ -99,6 +99,7 @@ function fnc_disk() {
 
     echo -n "$disk_pass" | cryptsetup luksFormat --batch-mode /dev/$root_part
     echo -n "$disk_pass" | cryptsetup luksOpen --batch-mode /dev/$root_part root
+    unset disk_pass
     mkfs.ext4 /dev/mapper/root -F
     mount /dev/mapper/root /mnt
 
@@ -138,6 +139,7 @@ function fnc_config_users() {
     useradd -mG wheel $user --root /mnt
     echo "$user:$user_pass" | chpasswd --root /mnt
     sed -i 's|# %wheel ALL=(ALL:ALL) ALL|%wheel ALL=(ALL:ALL) ALL|' /mnt/etc/sudoers
+    unset root_pass user_pass
 }
 
 function fnc_gen_fstab() {
