@@ -93,8 +93,8 @@ function fnc_disk() {
         sgdisk --new=2:0:0 /dev/$disk
     elif [ $disk_label = mbr ]; then
         wipefs -a /dev/$disk
-        parted /dev/sda mklabel msdos --script
-        parted /dev/sda mkpart primary ext4 0% 100% --script
+        parted /dev/$disk mklabel msdos --script
+        parted /dev/$disk mkpart primary ext4 0% 100% --script
     fi
 
     echo -n "$disk_pass" | cryptsetup luksFormat --batch-mode /dev/$root_part
