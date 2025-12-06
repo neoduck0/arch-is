@@ -4,7 +4,7 @@ set -e
 
 cd $(dirname $0)
 script_root=$(pwd)
-project_name=$(basename script_root)
+project_name=$(basename $script_root)
 
 source helpers-core.sh
 
