@@ -9,6 +9,8 @@ script_root=$(pwd)
 
 source helpers-chroot.sh
 
+mkinitcpio -p linux
+
 fnc_user_config
 
 fnc_gen_dirs
