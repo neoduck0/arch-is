@@ -132,6 +132,8 @@ function fnc_install_linux() {
 function fnc_support_encryption() {
     sed -i 's|block filesystems|block sd-encrypt filesystems|' /mnt/etc/mkinitcpio.conf
     sed -i "s|quiet|quiet rd.luks.name=$(blkid -s UUID -o value /dev/$root_part)=root root=/dev/mapper/root|" /mnt/etc/default/grub
+    touch /etc/vconsole.conf
+    mkinitcpio -p linux
 }
 
 function fnc_config_users() {
