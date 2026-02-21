@@ -13,7 +13,7 @@ def main():
         print("Error: provide arguments.")
         sys.exit(1)
 
-    match str(sys.argv[1:]):
+    match " ".join(sys.argv[1:]):
         case "diff":
             diff()
         case "installable":
