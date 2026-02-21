@@ -25,7 +25,7 @@ def main():
 
 
 def diff():
-    selected = PROFILES[PROFILE]
+    selected = PROFILES[PROFILE] + AUR
     selected.sort()
 
     installed = subprocess.run(
