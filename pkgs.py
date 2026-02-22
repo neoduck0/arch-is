@@ -17,9 +17,11 @@ def main():
         case "diff":
             diff()
         case "installable":
-            print(get_installable(PROFILE, False))
+            print(get_installable(PROFILE, ""))
         case "installable aur":
-            print(get_installable(PROFILE, True))
+            print(get_installable(PROFILE, "aur"))
+        case "installable flatpak":
+            print(get_installable(PROFILE, "flatpak"))
         case _:
             print("Error: arguments invalid.")
 
@@ -27,10 +29,18 @@ def main():
 def diff():
     selected = PROFILES[PROFILE] + AUR
     selected.sort()
+    selected += FLATPAKS
 
-    installed = subprocess.run(
-        ["pacman", "-Qeq"], capture_output=True, text=True
-    ).stdout.split()
+    installed = (
+        subprocess.run(
+            ["pacman", "-Qeq"], capture_output=True, text=True
+        ).stdout.split()
+        + subprocess.run(
+            ["flatpak", "list", "--app", "--columns=application"],
+            capture_output=True,
+            text=True,
+        ).stdout.split()
+    )
 
     diff = list(difflib.ndiff(selected, installed))
     for line in diff:
@@ -38,19 +48,31 @@ def diff():
             print(line)
 
 
-def get_installable(profile, include_aur):
+def get_installable(profile, type):
     return_str = ""
-    for pkg in PROFILES.get(profile, []):
-        return_str += " " + pkg
 
-    if not include_aur:
-        return return_str
+    if type == "":
+        for pkg in PROFILES.get(profile, []):
+            return_str += " " + pkg
 
-    for pkg in AUR:
-        return_str += pkg
+    if type == "aur":
+        for pkg in AUR:
+            return_str += " " + pkg
+
+    if type == "flatpak":
+        for pkg in FLATPAKS:
+            return_str += " " + pkg
 
     return return_str
 
+
+FLATPAKS = [
+    "com.github.wwmm.easyeffects",
+    "com.obsproject.Studio",
+    "com.usebottles.bottles",
+    "org.libreoffice.LibreOffice",
+    "org.shotcut.Shotcut",
+]
 
 AUR = ["opencode-bin", "helium-browser-bin", "yay"]
 
